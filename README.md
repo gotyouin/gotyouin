@@ -1,6 +1,4 @@
-
-t You In Project Documentation
-
+Got You In Project Documentation
 
 Project Overview
 Mobile specific issues
@@ -15,17 +13,15 @@ Barber Services
 Paypal Integration
 User Export
 
-
-
 Project Overview
 Got You In has both a traditional desktop implemenation (responsive), and mobile apps for Android and iPhone.
 
-Got You In has some interesting complexities which Drupal seems to handle reasonably well using custom content types, custom user profiles (profile 2 module), and Drupal views to connnect all the data dots.    After some experimentation and once the scope of the full project started to come into focus, and the budget was found to be on the scant side, it was decided that the most practical way to integrated 2 mobile apps and a website, was to use Titanium for the app part, with a liberal use of webviews to share content / data between Drupal on one end, and the mobile app stuff on the other. This cuts way down on development time as it allows for a sharing of significant portions of the full application. While not ideal in some respects, it meets the budget and deadline constraints.   
+Got You In has some interesting complexities which Drupal seems to handle reasonably well using custom content types, custom user profiles (profile 2 module), and Drupal views to connnect all the data dots.  After some experimentation and once the scope of the full project started to come into focus, and the budget was found to be on the scant side, it was decided that the most practical way to integrated 2 mobile apps and a website, was to use Titanium for the app part, with a liberal use of webviews to share content / data between Drupal on one end, and the mobile app stuff on the other. This cuts way down on development time as it allows for a sharing of significant portions of the full application. While not ideal in some respects, it meets the budget and deadline constraints.  
 Mobile specific issues
 
 Most of the mobile application uses webviews to display data. This is mostly the same data a desktop user sees, but the layout and styling are changed to better adapt to a mobile situation. (This is important for testing since there are many similarities in code, but they are not identical).
 
-In some cases, hidden webviews are used by the mobile apps, especially to detect account details (eg logged in or not). Knowing who the mobile user is (barber, owner, customer), is important for the mobile app navigation (which is done natively). 
+In some cases, hidden webviews are used by the mobile apps, especially to detect account details (eg logged in or not). Knowing who the mobile user is (barber, owner, customer), is important for the mobile app navigation (which is done natively).
 
 There is “native code” to handle:
 
@@ -40,11 +36,11 @@ Syncing the user login data so that in app navigation can be handled.
 
 Initially all urls referenced from mobile included ?app=1 query string (this is continued for legacy reasons). We are also now using a different domain name for mobile apps: gotyouin.dbsclients.com.
 
-Problems: 
+Problems:
 
-The biggest mobile problem was Android 2.3. This seems to choke on a number of JavaScript references that looked very commonplace and were handled by iPhone and Android 4.* just fine. Much troubleshooting resulted. 
+The biggest mobile problem was Android 2.3. This seems to choke on a number of JavaScript references that looked very commonplace and were handled by iPhone and Android 4.* just fine. Much troubleshooting resulted.
 
-Ideally, we’d like to use caching with Drupal sites. We don’t / can’t here, because Drupal does not see the distinction between the desktop layouts and the special layouts done for mobile apps. The caching gets scrambled. This could probably be addressed with third party modules. The larger issue is that almost the entire app really needs authenticated users for the core functionality. And caching will not play well with so many screens requiring a logged in user. Also, there are a number of highly peronalized screens (search results, etc), that would probably not be cachable anyway. So caching is turned off. 
+Ideally, we’d like to use caching with Drupal sites. We don’t / can’t here, because Drupal does not see the distinction between the desktop layouts and the special layouts done for mobile apps. The caching gets scrambled. This could probably be addressed with third party modules. The larger issue is that almost the entire app really needs authenticated users for the core functionality. And caching will not play well with so many screens requiring a logged in user. Also, there are a number of highly peronalized screens (search results, etc), that would probably not be cachable anyway. So caching is turned off.
 
 Sessions
 We have attempted to make session lifetime 180 days so that anyone who is using the app does not have to keep logging in. This seems desirable.  Mobile sessions are complicated by the fact that Drupal uses http-only cookies for sessions. These are not accessible by webviews (anything in the html/javascript is accessible including document.cookie). Session data can be grabbed directly using the Drupal API, but co-ordinating raw API data with webviews seems difficult and cumbersome at best. For that reason, all data and Drupal interaction is via webviews. (The services module was evaluated as a possible solution to this, but the http-only cookies presented a hurdle.)  
@@ -62,7 +58,7 @@ Custom PHP Code
 Outside of a number of custom templates, and the dbs_booking module, there is custom code in /gotyouin_php.
 
 CRON
- See /etc/cron.d/dbs_clients, for various crons used by the site. All related php code should be in /gotyouin_php folder. 
+ See /etc/cron.d/dbs_clients, for various crons used by the site. All related php code should be in /gotyouin_php folder.
 email reminders
 notifications (in same script as email reminders)
 recurring appointments
