@@ -1,0 +1,163 @@
+<?php
+
+/**
+ * @file
+ * Default theme implementation to display a single Drupal page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - $base_path: The base URL path of the Drupal installation. At the very
+ *   least, this will always default to /.
+ * - $directory: The directory the template is located in, e.g. modules/system
+ *   or themes/bartik.
+ * - $is_front: TRUE if the current page is the front page.
+ * - $logged_in: TRUE if the user is registered and signed in.
+ * - $is_admin: TRUE if the user has permission to access administration pages.
+ *
+ * Site identity:
+ * - $front_page: The URL of the front page. Use this instead of $base_path,
+ *   when linking to the front page. This includes the language domain or
+ *   prefix.
+ * - $logo: The path to the logo image, as defined in theme configuration.
+ * - $site_name: The name of the site, empty when display has been disabled
+ *   in theme settings.
+ * - $site_slogan: The slogan of the site, empty when display has been disabled
+ *   in theme settings.
+ *
+ * Navigation:
+ * - $main_menu (array): An array containing the Main menu links for the
+ *   site, if they have been configured.
+ * - $secondary_menu (array): An array containing the Secondary menu links for
+ *   the site, if they have been configured.
+ * - $breadcrumb: The breadcrumb trail for the current page.
+ *
+ * Page content (in order of occurrence in the default page.tpl.php):
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title: The page title, for use in the actual HTML content.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ * - $messages: HTML for status and error messages. Should be displayed
+ *   prominently.
+ * - $tabs (array): Tabs linking to any sub-pages beneath the current page
+ *   (e.g., the view and edit tabs when displaying a node).
+ * - $action_links (array): Actions local to the page, such as 'Add menu' on the
+ *   menu administration interface.
+ * - $feed_icons: A string of all feed icons for the current page.
+ * - $node: The node object, if there is an automatically-loaded node
+ *   associated with the page, and the node ID is the second argument
+ *   in the page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - $page['help']: Dynamic help text, mostly for admin pages.
+ * - $page['highlighted']: Items for the highlighted content region.
+ * - $page['content']: The main content of the current page.
+ * - $page['sidebar_first']: Items for the first sidebar.
+ * - $page['sidebar_second']: Items for the second sidebar.
+ * - $page['header']: Items for the header region.
+ * - $page['footer']: Items for the footer region.
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_page()
+ * @see template_process()
+ */
+?>
+
+<?php include('header.php'); ?>
+
+<div class="container">
+  <?php /*
+  <?php if ($breadcrumb): ?>
+  <?php print $breadcrumb; ?>
+  <?php endif; ?>
+  */ ?>
+
+  <?php if( arg(0) == 'shops'): ?>
+  <?php endif; ?>
+
+  <?php print $messages; ?>
+  <?php if ($page['highlighted']): ?>
+  <?php print render($page['highlighted']); ?>
+  <?php endif; ?>
+  <div class="row">
+    <?php if ($page['sidebar_first']): ?>
+    <div class="span<?php print $sidebar_first_size; ?>">
+      <?php print render($page['sidebar_first']); ?>
+    </div>
+    <?php endif; ?> 
+    <div class="span<?php print $content_size; ?>">
+      <section class="docs-outer-wrapper content-section section-features">
+        <div class="docs-inner-wrapper">
+          <div class="iphone">
+            <div class="iphone-content">
+              <div id="iwindow">
+                <img src="/sites/all/themes/bh_bootstrap/images/splash.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+
+
+          <article id="trial" class="feature active row">
+          <div class="span8">
+            <div class="inner">
+              <h3>30 Day Free Trial</h3>
+              <p class="feature-description"></p>
+              <a href="free-trial" class="btn-main ">Start your free trial <i class="icon-play"></i></a>
+              <div class="feature-example feature-example-fullbleed displaypiece">
+                <img src="/sites/all/themes/bh_bootstrap/images/splash.jpg" alt="" />
+              </div>
+            </div>
+          </div>
+          </article>
+
+          <h2>How It Works</h2>
+
+          <article id="app-overview" class="feature row">
+          <div class="span8">
+            <h3 class="feature-title">Overview</h3>
+            <p class="feature-description">Got You In is a scheduling solution for barbers and their customers.  Got You In also introduced the first universal scheduling app for barbers.  Through the Got You In solution, barbers and their clients can schedule, and manage, haircut appointments in real-time, anytime and anywhere. Got You In eliminates the process of manually texting or calling to schedule a haircut appointment, on the part of barbers and their customers.</p>
+            <div class="feature-example feature-example-fullbleed displaypiece">
+              <img src="/sites/all/themes/bh_bootstrap/images/home.jpg" alt="" />
+            </div>
+          </div>
+          </article>
+
+          <article id="app-barbers" class="feature row">
+          <div class="span8">
+            <h3 class="feature-title">For Barbers</h3>
+            <p class="feature-description">It's easy.  Create an account, complete your profile, and begin directing your customers to your unique ID Number so they can schedule their upcoming, or recurring, haircut appointment with you.  If you're a Shop Owner, make sure barbers in your shop register under your ID.</p>
+            <p>Got You In provides a solution for barber to grow their business through efficiency, elevation and exposure.  Through Got You In, barbers receive more time to cut more hair, which means more money. Our Member Barbers are promoted through Got You In marketing efforts.  Additional tips on how to grow your business through Got You In are listed in The Razor's Edge.</p>
+            <div class="feature-example feature-example-fullbleed displaypiece">
+              <img src="/sites/all/themes/bh_bootstrap/images/shop.jpg" alt="" />
+            </div>
+          </div>
+          </article>
+
+          <article id="app-customers" class="feature row">
+          <div class="span8">
+            <h3 class="feature-title">For Customers</h3>
+            <p class="feature-description">It's simple: in 3 steps, you can schedule your appointment! Create your account, complete your profile and schedule your upcoming, or recurring haircut appointment. Finally, there's an app, specifically for individuals to schedule their haircut appointment. Your haircut, why wait? Download the app from the App Store or Google Play, search for your barber, and book your appointment. Also, if you're traveling, or you've relocated, search for a barber in your area, and book your appointment. You pick the service you need (haircut, shave, both, etc,), and then you can choose the available times your barber has for the service your selected.</p>
+            <div class="feature-example feature-example-fullbleed displaypiece">
+              <img src="/sites/all/themes/bh_bootstrap/images/search.jpg" alt="" />
+            </div>
+          </div>
+          </article>
+
+        </div>
+      </section>
+    </div> 
+    <?php if ($page['sidebar_second']): ?>
+    <div class="span<?php print $sidebar_second_size; ?>">
+      <?php print render($page['sidebar_second']); ?>
+    </div>
+    <?php endif; ?>
+  </div><!-- .row -->
+</div>  
+<?php //if ($page['row_post_content']): print render($page['row_post_content']); endif; ?>
+<?php include('footer.php'); ?>
+
+

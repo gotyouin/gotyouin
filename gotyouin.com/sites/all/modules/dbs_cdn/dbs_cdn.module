@@ -1,0 +1,38 @@
+<?php
+/**
+* @file dbs_cdn.module
+*
+* CDN url rewriting
+*
+* @author Hal Burgiss 2013-03-21
+*/
+
+//die('hal');
+//function dbs_cdn_file_url_alter(&$uri) {
+function dbs_cdn_url_outbound_alter( &$path, &$options, $original_path ) {
+die('hal');
+  static $drupal_static_fast;
+  // A drupal_static_reset() would clear this and then we need to rerun variable_get.
+  if (!isset($drupal_static_fast['cdn_domain'])) {
+    $drupal_static_fast['cdn_domain'] = &drupal_static(__FUNCTION__);
+    $drupal_static_fast['cdn_domain'] = variable_get('cdn_domain');
+  }
+  $cdn_domain = &$drupal_static_fast['cdn_domain'];
+  if ($cdn_domain && strpos($uri, ':') === FALSE) {
+    $uri = $cdn_domain . $uri;
+  }
+ die( $cdn_domain );
+}
+
+function dbs_cdn_stream_wrappers_alter(&$wrappers) {
+  $wrappers['public']['class'] = 'DrupalCDNPublicStreamWrapper';
+}
+
+class DrupalCDNPublicStreamWrapper extends DrupalPublicStreamWrapper {
+  function getExternalUrl() {
+    $path = str_replace('\\', '/', $this->getTarget());
+    $prefix = variable_get('cdn_domain', $GLOBALS['base_url'] . '/');
+    return $prefix . self::getDirectoryPath() . '/' . drupal_encode_path($path);
+  }
+}
+

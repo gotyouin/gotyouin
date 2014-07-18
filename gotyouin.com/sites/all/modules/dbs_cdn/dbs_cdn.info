@@ -1,0 +1,3 @@
+core = "7.x"
+description = "URL rewriting for static content for for Got You In"
+name = "DBS CDN"

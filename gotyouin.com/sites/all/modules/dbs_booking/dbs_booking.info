@@ -1,0 +1,6 @@
+core = "7.x"
+description = "A custom module that adds functionality developed by DBS>Interactive"
+name = "DBS Book an Appointment Form"
+
+scripts[] = js/mobiscroll/mobiscroll-2.4.custom.min.js
+stylesheets[all][] = js/mobiscroll/mobiscroll-2.4.custom.min.css

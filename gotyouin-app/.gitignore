@@ -1,0 +1,15 @@
+*.sw[nop]
+*~
+.#*
+[#]*#
+Thumbs.db
+__*
+.project
+__MACOSX
+.DS_Store
+build/*
+./build/*
+build.log
+.settings
+tmp
+.fastdev.lock

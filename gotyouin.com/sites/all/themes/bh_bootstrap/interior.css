@@ -1,0 +1,356 @@
+html { font-weight:normal; }
+
+a { color: red; }
+a:hover { color: darkred; }
+
+body.not-front #block-system-main > .content {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  max-width: 660px;
+  margin: 0 auto 20px auto;
+}
+
+.not-front #page-title {
+  color: #E91C2D;
+}
+
+#block-system-main-menu li:last-child {
+  padding: 0;
+}
+
+#block-system-main-menu li:last-child:hover {
+    display: inline-block;
+    margin: 8px 0;
+    border-top: 1px solid #C61827;
+    border-bottom: 1px solid #8B111B;
+    border-radius: 6px 6px 6px 6px;
+    border-image: none;
+    background: #8B111B;
+    box-shadow: 0 1px 0 0 #B31623;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+}
+
+#block-system-main-menu li:last-child a {
+    display: block;
+    padding: 8px 24px;
+}
+
+.btn-main:hover {
+    border: 0 solid #232D6E;
+    background: #232D6E;
+}
+
+.not-front .nav-tabs.primary {
+    margin: 1em auto .5em auto;
+    max-width: 660px;
+}
+.not-front .region-content { margin-bottom: 1em; }
+
+.nav-tabs, .nav-pills { text-align:center; border:none; }
+.nav-tabs > li, .nav-pills > li {
+    display: inline-block;
+    float: none;
+}
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover { border-radius:5px; }
+
+/* 30 Day Free Trial -------------------------
+---------------------------------------*/
+
+.page-node-25 .container .content {
+  margin: 0 auto;
+  max-width: 660px;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Pricing Page -------------------------
+---------------------------------------*/
+
+body.page-node-16 #block-system-main > .content {
+  margin: 20px auto;
+  max-width: 660px;
+}
+
+body.page-node-16 .container .content {
+  overflow: visible;
+}
+
+body.page-node-16 .features-text {
+  padding-top: 200px;
+}
+
+body.page-node-16 .features-left {
+  float: left;
+  margin: 0 30px 0 -170px;
+}
+
+body.page-node-16 .features-right {
+  float: right;
+  margin: 0 -170px 0 30px;
+}
+
+.page-node-16 ol li,
+.page-node-16 ul li {
+  padding: 8px 0;
+}
+
+
+/* Blog -------------------------
+---------------------------------------*/
+
+.page-blog .container #block-system-main > .content {
+  box-shadow: none;
+  max-width: 1000px;
+}
+
+.view-blog-post .span4 {
+  min-height: 280px;
+  border: 10px solid white;
+  background: url('/sites/all/themes/bh_bootstrap/images/blog-img-bg.jpg') center no-repeat;
+  background-size: cover;
+}
+
+.view-blog-post .span4 a:first-of-type {
+  display: block;
+  padding-top: 10px;
+  line-height: 1.2;
+}
+
+.view-blog-post .span4 .field-content p img {
+  display: none;
+}
+
+
+/* Support -------------------------
+---------------------------------------*/
+
+.page-node-55 #block-system-main > .content {
+  margin: 20px auto;
+  max-width: 660px;
+}
+
+
+/* Register -------------------------
+---------------------------------------*/
+
+#signup-list {
+  max-width : 660px;
+  margin: 0 auto;
+}
+
+#signup-list li div {
+  display: block;
+  width: 100%;
+}
+
+#signup-list li {
+  background: url("images/arrow.png") 98% center no-repeat white;
+  margin-bottom: 10px;
+  border: none;
+  padding: 0;
+}
+
+#signup-list li a {
+  color: black;
+  padding: 2em 1em;
+  display: block;
+}
+
+
+/* Registration ------------------------
+---------------------------------------*/
+
+.form-horizontal input.form-text, .form-horizontal .form-select, .form-horizontal textarea {
+  margin: 0 0 2%;
+}
+
+.password-strength {
+  float: none;
+  margin-bottom: 1em;
+}
+
+.office-hours-block .dayname {
+  display: block;
+  width: 100%;
+}
+
+#user-register-form select, #profile-barber-field-barber-availability-add-more-wrapper select,
+.form-horizontal .office-hours-block .form-select {
+  width: 30%;
+  margin: 1em 0;
+}
+
+.office-hours-block .control-group {
+  display: inline;
+}
+
+
+/* Barber Search ------------------------
+---------------------------------------*/
+
+#search-zip-name input {
+  background: #555;
+  box-shadow: none;
+  text-indent: 1em;
+}
+
+#search-zip-name {
+  margin-bottom: 2em;
+}
+
+.view-shops .menu-search,
+.view-barbers .menu-search {
+  margin-bottom: 3px;
+}
+
+.view-shops .menu-search li,
+.view-barbers .menu-search li {
+  display: inline;
+  list-style-type: none; 
+}
+
+.view-shops .menu-search li.active a,
+.view-barbers .menu-search li.active a {
+  background: lightgray;
+  color: red;
+}
+
+#search-zip-name button {
+  background: url("images/search-icon.png") center no-repeat #232D6E;
+  border-radius: 23px;
+  padding: 15px;
+  height: 46px;
+  width: 50px;
+  margin-top: -8px;
+}
+
+.view-shops .menu-search li a,
+.view-barbers .menu-search li a {
+  background: gray;
+  border-radius: 5px 5px 0 0;
+  padding: 15px 20px;
+  color: black;
+}
+
+#search-total-results, #search-results-num,
+#search-results-num,
+#search-view-map {
+  background: lightgray;
+}
+
+.view-shops .view-content .views-row-even,
+.view-barbers .view-content .views-row-even {
+  background: #efefef;
+}
+
+/* Shop Page -------------------------
+---------------------------------------*/
+#block-views-barbers-block-1 { max-width: 660px; margin:0 auto; }
+
+/* New Appointment -------------------------
+---------------------------------------*/
+
+#dbs-booking-form .form-item-field-date label { margin:0 auto; text-align:center; width:100%; clear:both; }
+#dbs-booking-form .form-item-field-date .controls { margin:0 auto; clear:both; }
+#dbs-booking-form .form-item-field-recurring { margin-top:1em; }
+#dbs-booking-form .form-item-field-recurring label { width:50%; }
+#dbs-booking-form .form-item-field-recurring .controls { margin-left: 53%; }
+#available-times .btn { max-width:220px; margin:.7em auto; font-size:1.2em; }
+body #new-app-selected-barber { font-size: 1.1em; }
+
+#add-remove-services tr.active td { background:#ccc; }
+#booking-node-form .round-btn { border-color:#000;}
+
+[class^="icon-"], [class*=" icon-"] {
+background-image: url("images/glyphicons-halflings-white.png");
+}
+
+#block-system-main .views-row {
+  border-bottom: 1px solid #cccccc;
+  padding: 0 0 1em 1em;
+  margin: 0;
+  overflow: hidden;
+}
+.node-type-shop #block-views-barbers-block-1 .views-field-picture,
+.page-user .user-picture {
+  border: 7px solid #cccccc;
+  box-shadow: 0 0 20px #dddddd;
+  border-radius: 600px;
+  max-width: 140px;
+  overflow: hidden;
+  margin:0 auto;
+}
+.barber-at a:hover { color:#ccc; }
+
+.right-side {  text-align:center; margin:1em; }
+.right-side > div {  display: inline-block; }
+
+.node-type-shop .view-display-id-block_1 .views-row {
+  width:46%;
+  float:left;
+  margin:2%;
+}
+.view-barbers .view-content .views-row-even { background: #ffffff; }
+.node-type-shop .view-display-id-block_1 .views-row:nth-child(odd) { clear:both; }
+
+.app-is-mobile.page-node-add-booking #customer-edit { display: block; margin: 0 auto; }
+
+
+/* Media Queries -------------------------
+---------------------------------------*/
+
+@media all and (max-width: 890px) {
+
+  #large-header-block h1 {
+    margin: 1em auto;
+  }
+}
+
+@media all and (max-width: 780px) {
+
+  .region-header {
+    float: none;
+    margin: 1em auto;
+    width: 90%;
+  }
+  .view-blog-post .span4 {
+    margin-bottom: 1em;
+  }
+}
+
+@media all and (max-width: 514px) {
+
+  body.page-node-16 .features-left,
+  body.page-node-16 .features-right {
+    float: none;
+    margin: 0 auto;
+  }
+  body.page-node-16 .features-text {
+    padding-top: 20px;
+  }
+
+}
+
+@media all and (max-width: 360px) {
+
+  #large-header-block .strip a {
+    padding-bottom: 1em;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+

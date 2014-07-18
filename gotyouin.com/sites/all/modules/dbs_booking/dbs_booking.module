@@ -1,0 +1,336 @@
+<?php
+//**************************************************
+//
+//  This function add the path to the form
+//
+//**************************************************
+
+ // triage 2013-02-05 for notices on phone.
+ ini_set('error_reporting', E_ALL & ~E_NOTICE);
+ ini_set('display_errors', 'Off');
+
+
+
+function dbs_booking_menu() {
+
+  $items = array();
+
+  $items['new-appointment'] = array( // The URL where the form is located
+    'title' => 'New Appointment', // The page title
+    'description' => 'A form for customers to schedule appointments with barbers',
+    'page callback' => 'drupal_get_form', // This is the function that will be called when the page is accessed.  For a form, use drupal_get_form
+    'page arguments' => array('dbs_booking_form'), // Name of the form
+    'access callback' => 'dbs_access'
+  );
+
+  return $items;
+}
+
+function dbs_access ()
+{
+  global $user;
+  if($user->uid)
+  {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//**************************************************
+//
+//  This function builds the form
+//
+//**************************************************
+
+function dbs_booking_form($form, &$form_state) {
+
+drupal_add_js(drupal_get_path('module', 'dbs_booking') . '/js/dbs_booking.js');
+
+  /*  In the app the barber id should be defined before reaching this form (or user could have been redirected from a barber profile) */
+
+  if( isset( $_GET['barber_id']) ) {
+
+    $barber_id = $_GET['barber_id'];
+    $user = user_load( $barber_id );
+    $profile2 = profile2_load_by_user( $barber_id );
+    $shop = node_load( $profile2['barber']->field_shop['und'][0]['target_id'] );
+
+    if( isset($user->field_display_name['und'][0]['value']) ) {
+      $barber_name = $user->field_display_name['und'][0]['value'];
+    } else {
+      $barber_name = $user->field_first_name['und'][0]['value'] . ' ' . $user->field_last_name['und'][0]['value'];
+    }
+
+    //-----[ FIELD: BARBER ]-----*/
+    $form['field_barber'] = array(
+      '#value' => $barber_id,
+      '#type' => 'hidden',
+      '#required' => TRUE,
+      '#suffix' => '<h3 id="new-app-shop-title"><a href="/node/' . drupal_lookup_path('alias',"node/".$shop->nid) . '">' . $shop->title . '</a></h3>
+                    <p id="new-app-selected-barber">You selected <strong><a href="#">' . $barber_name . '</a></strong> as your barber. <a href="/search/barbers">Click here to search for other barbers</a></p>',
+    );
+
+  } else {
+
+  /*  Although the barber should be defined, I added this select box for debugging and possible use on the website */
+
+    $options = array();
+
+    $options[0] = t('Select a barber');
+
+    /* Query regular and independent barbers */
+    $users = db_query('SELECT users.uid AS uid FROM users users
+      INNER JOIN users_roles users_roles ON users.uid = users_roles.uid
+      WHERE users_roles.rid = 5 OR users_roles.rid = 6');
+    foreach($users as $user)
+    {
+      $user = user_load( $user->uid );
+      if( isset($user->field_display_name['und'][0]['value']) ) {
+        $options[$user->uid] = $user->field_display_name['und'][0]['value'];
+      } else {
+        $options[$user->uid] = $user->field_first_name['und'][0]['value'] . ' ' . $user->field_last_name['und'][0]['value'];
+      }
+    }
+
+    /* Generate select box with Drupal API */
+    $form['field_barber'] = array(
+       '#type' => 'select',
+       '#title' => t('Below you can select a barber for your appointment. Not sure which barber to select? <a href="/search/barbers">Try our barber search</a>'),
+       '#options' => $options,
+    );
+
+  }
+
+  unset($options);
+
+  if( isset( $_GET['barber_id']) ) {
+
+    $options = array();
+
+    $suffix = '<div id="new-app-services">
+                <table cellpadding="0" cellspacing="0" class="table">
+                  <thead>
+                    <tr><th class="service_price">Price</th><th>Service</th><th class="service_time">Time Requirement</th><th class="service_select">Select</th></tr>
+                  </thead>
+                  <tbody>';
+
+    /* Get all services provided by barber */
+
+    $count = 0;
+    // added (array) HB 2013-02-05
+    /* doesn't work after changes made to services by Jenny
+    foreach( (array)$profile2['barber']->field_services['und'] as $service)
+    {
+
+      $options[$count] = $service['target_id'];
+      $count++;
+      $service = node_load( $service['target_id'] );
+      $suffix .= '<tr class="service-'. $service->nid . '">
+                    <td class="service_price">$'. $service->field_price['und'][0]['value'] .'</td>
+                    <td class="service_title">'. $service->title .'</td>
+                    <td class="service_time"><span>'. $service->field_typical_time_required['und'][0]['value'] .'</span> minutes</td>
+                    <td class="service_select"><button class="btn btn-primary">Add</a></td>
+                  </tr>';
+
+    }
+    */
+    $query = new EntityFieldQuery();
+
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'service')
+      ->propertyCondition('status', 1)
+      ->propertyCondition('uid', $_GET['barber_id']);
+
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+      $etids = array_keys($result['node']);
+      $etids = entity_load('node', $etids);
+    }
+
+    foreach($etids as $service)
+    {
+      $options[$count] = $service->nid;
+      $count++;
+      $suffix .= '<tr class="service-'. $service->nid . '">
+                    <td class="service_price">$'. $service->field_price['und'][0]['value'] .'</td>
+                    <td class="service_title">'. $service->title .'</td>
+                    <td class="service_time"><span>'. $service->field_typical_time_required['und'][0]['value'] .'</span> minutes</td>
+                    <td class="service_select"><button class="btn btn-primary">Add</a></td>
+                  </tr>';
+
+    }
+
+    $suffix .= '</tbody>
+                <tfoot>
+                  <tr>
+                    <td class="service_price" colspan="2"><strong>Total Price:</strong> $<span>0</span></td>
+                    <td class="service_time"><strong>Total Time:</strong> <span>0</span> minutes</td>
+                    <td class="service_select"><a href="#" class="btn btn-danger">Clear</a></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>';
+
+  }
+
+  if( !isset($options) ) { $options = null; }
+  if( !isset($suffix) ) { $suffix = null; }
+
+    //-----[ FIELD: SERVICES ]-----*/    
+    $form['field_services'] = array(
+    '#type' => 'checkboxes',
+    '#options' => drupal_map_assoc($options),
+    '#title' => t('What services would you like?'),
+    '#validated' => TRUE,
+    '#suffix' => $suffix,
+    );
+
+    //-----[ FIELD: DATE ]-----*/
+    $form['field_date'] = array(
+      '#type' => 'textfield', 
+       '#title' => t('Choose a date for your appointment'), 
+      '#default_value' => date('m/d/Y'), 
+      '#size' => 12, 
+      '#maxlength' => 12, 
+      '#required' => TRUE,
+      '#suffix' => '<div id="btn-generate-times"><button class="btn btn-primary">Generate Available Times</button></div>',
+    );
+
+    $options = array();
+    $options[0] = 'No';
+    $options[1] = 'Yes';
+
+    //-----[ FIELD: RECURRING ]-----*/    
+    $form['field_recurring'] = array(
+    '#type' => 'radios',
+    '#options' => drupal_map_assoc($options),
+    '#title' => t('Would you like to schedule recurring appointments with this barber on this date?'),
+    '#validated' => TRUE,
+    '#default_value' => $options[0],
+    );
+
+    $options = array();
+    $options[0] = 'Every Week';
+    $options[1] = 'Bi-Weekly';
+    $options[2] = 'Every 3 Weeks';
+    $options[3] = 'Every 4 Weeks';
+
+    //-----[ FIELD: RECURRING MULTIPLIER ]-----*/    
+    $form['field_recurring_mult'] = array(
+       '#type' => 'select',
+       '#title' => t('Please choose how frequently you would like to schedule appointments on the selected day:'),
+       '#options' => $options,
+    );
+
+    //-----[ FIELD: TIME ]-----*/
+    $form['field_time'] = array(
+      '#type' => 'hidden',
+      '#required' => TRUE,
+      '#suffix' => '<div id="available-times"></div>',
+    );
+
+    //-----[ FIELD: CUSTOMER ]-----*/
+    global $user;
+
+    $form['field_customer'] = array(
+      '#value' => $user->uid,
+      '#type' => 'hidden',
+      '#required' => TRUE
+    );
+
+  
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+
+  
+  return $form;
+}
+
+//**************************************************
+//
+//  This function validates the form
+//
+//**************************************************
+
+function dbs_booking_form_validate($form, &$form_state) {
+
+}
+
+//**************************************************
+//
+//  This function submits the data
+//
+//**************************************************
+
+function dbs_booking_form_submit($form, &$form_state) {
+
+  global $user;
+
+  $node = new stdClass();
+  $node->title = "Appointment";
+  $node->type = "booking";
+  node_object_prepare($node);
+  $node->language = LANGUAGE_NONE;
+  $node->uid = $form_state['values']['field_barber'];
+  $node->status = 1;
+  $node->promote = 0;
+  $node->comment = 1;
+
+  $node->field_barber[$node->language][] = array(
+    'target_id' => $form_state['values']['field_barber'],
+    'target_type' => 'node',
+  );
+
+  $node->field_recurring_multiplier[$node->language][] = array(
+    'value' => $form_state['values']['field_recurring_mult'],
+  );
+
+  //Generate a unique recurring token to be used to "string together" the
+  //recurring appointments. Use uid-timestamp
+  if($form_state['values']['field_recurring'] == 'Yes') {
+      $capture_date = new DateTime();
+      $token = $form_state['values']['field_barber']."-".$capture_date->getTimestamp();
+      $node->field_recurring_token['und'][0]['value'] = $token;
+      $node->field_recurring_status['und'][0]['value'] = 'NEW';
+  }
+  
+  $date = strtotime($form_state['values']['field_date'] . ' ' . $form_state['values']['field_time']);
+  $format = date("D, F j, Y, g:i a. ", $date);
+  $date = date('Y-m-d H:i:s',$date);
+
+  $node->field_date['und'][0]['value'] = $date;
+
+  $node->field_customer['und'][0] = array(
+    'target_id' => $form_state['values']['field_customer'],
+    'target_type' => 'user',
+  );
+
+  foreach($form_state['values']['field_services'] as $service)
+  {
+    $node->field_desired_services[$node->language][] = array(
+      'target_id' => $service,
+      'target_type' => 'node',
+    );
+  }
+
+  $node = node_submit($node);
+  node_save($node);
+
+  $barber = user_load($form_state['values']['field_barber']);
+  $client = user_load($form_state['values']['field_customer']);
+
+  /*-- SEND EMAIL TO BARBER --*/
+  $to = $barber->mail;
+  $subject = "A new appointment has been scheduled!";
+  $message = $client->field_first_name['und'][0]['value'] . ' ' . $client->field_last_name['und'][0]['value'] . ' scheduled an appointment with you on ' . $format;
+  $from = "info@gotyouin.com";
+  $headers = "From:" . $from;
+  mail($to,$subject,$message,$headers);
+
+  $form_state['redirect']  = 'appointment-thank-you';
+  
+}

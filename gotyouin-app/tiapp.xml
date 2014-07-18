@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <id>com.dbsinteractive.gotyouin</id>
+    <name>Got You In</name>
+    <version>1.04</version>
+    <publisher>DBS Interactive</publisher>
+    <url>http://www.dbswebsite.com</url>
+    <description>Got You In Mobile App</description>
+    <copyright>2013 DBS Interactive</copyright>
+    <icon>Icon.png</icon>
+    <persistent-wifi>false</persistent-wifi>
+    <prerendered-icon>true</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>e3ea9b36-cbf5-405b-96d8-51ee9c005c6e</guid>
+    <property name="ti.ui.defaultunit" type="string">system</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <!--            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation> -->
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest android:versionCode="2" android:versionName="1.0d">
+            <!-- needs to be updated as int on every release -->
+            <supports-screens android:anyDensity="true"/>
+            <uses-sdk android:minSdkVersion="8"/>
+        </manifest>
+    </android>
+    <ios>
+        <plist>
+            <dict>
+                <key>UIPrerenderedIcon</key>
+                <true/>
+                <key>UIStatusBarStyle</key>
+                <string>UIStatusBarStyleBlackTranslucent</string>
+                <key>UISupportedInterfaceOrientations</key>
+                <array>
+                    <string>UIInterfaceOrientationPortrait</string>
+                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
+                </array>
+                <key>UIAppFonts</key>
+                <array>
+                    <string>/fonts/TitilliumWeb-Regular.ttf</string>
+                    <string>/fonts/TitilliumWeb-Bold.ttf</string>
+                    <string>/fonts/OpenSans-Regular.ttf</string>
+                </array>
+            </dict>
+        </plist>
+        <min-ios-ver>4.0</min-ios-ver>
+    </ios>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules/>
+    <deployment-targets>
+        <target device="tizen">false</target>
+        <target device="iphone">true</target>
+        <target device="ipad">false</target>
+        <target device="blackberry">false</target>
+        <target device="android">true</target>
+        <target device="mobileweb">false</target>
+    </deployment-targets>
+    <sdk-version>3.0.0.GA</sdk-version>
+    <!-- <property name="ti.android.fastdev" type="bool">false</property> -->
+    <property name="ti.android.bug2373.disableDetection" type="bool">true</property>
+    <property name="ti.android.bug2373.finishfalseroot" type="bool">true</property>
+    <property name="ti.android.bug2373.restartDelay" type="int">500</property>
+    <property name="ti.android.bug2373.finishDelay" type="int">0</property>
+    <!-- -->
+    <property name="ti.android.bug2373.skipAlert" type="bool">true</property>
+    <!--
+	<property name="ti.android.bug2373.message"/>Initializing</property>
+	<property name="ti.android.bug2373.title">Restart Required</property>
+
+	<property name="ti.android.bug2373.buttonText">Continue</property>
+-->
+</ti:app>
+<!-- DBS NOTE: Do NOT Change this file unless you really, REALLY need to -->
